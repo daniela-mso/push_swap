@@ -1,16 +1,21 @@
 # include "push_swap.h"
 
-void	ft_stacks(n_stack_box **a, char **argv)
+void	ft_stacks(stack_node **a, char **argv)
 {
-	long int	num;
+	long	num;
+	int		i;
 
+	i = 0;
 	while (*argv !=  NULL)
 	{
-		//need to transform the str in ints 
-		//need to check for overflows and errors 
-		//else ned to free?
-		//cant have repetitions 
+		if (syntax_error(argv[i]))
+			free_error(a);
+		num = ft_atol(argv[i]);
+		if (num > INT_MAX || num < INT_MIN)
+			free_error(a);
+		if (duplicate_error(*a, num))
+			free_error(a);
+		
 
-		//how do i create the node with the values i got 
 	}
 }

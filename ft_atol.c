@@ -1,16 +1,5 @@
 # include "push_swap.h"
 
-
-int	ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int	ft_isspace(int c)
-{
-	return ((c >= 9 && c <= 13) || c == ' ');
-}
-
 long int	ft_atol(char *str)
 {
 	long int	i;
@@ -33,5 +22,5 @@ long int	ft_atol(char *str)
 		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return num;
+	return (num * sign);
 }

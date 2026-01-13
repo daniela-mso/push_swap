@@ -2,7 +2,7 @@ NAME = push_swap
 
 CFLAGS = -Wall -Wextra -Werror #I .
 
-SRC = main.c ft_stacks.c ft_split.c ft_atol.c
+SRC = push_swap.c ft_stacks.c ft_split.c ft_atol.c ft_errors.c ft_helper_functions.c 
 
 
 #This line simply creates a variable (OBJS) that contains a list of object files 
