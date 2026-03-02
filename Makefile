@@ -1,8 +1,39 @@
 NAME = push_swap
 
-CFLAGS = -Wall -Wextra -Werror #I .
+#LIBFT_DIR = ./libft
 
-SRC = push_swap.c ft_stacks.c ft_split.c ft_atol.c ft_errors.c ft_helper_functions.c 
+#LIBS = ./libft/libft.a
+
+CFLAGS = -Wall -Wextra -Werror -g #I .
+
+SRC = ft_append_node.c \
+ft_errors.c \
+ft_price.c \
+ft_push.c \
+ft_reverse_rotate.c \
+ft_rotate.c \
+ft_sort_stacks.c \
+ft_sorting.c \
+ft_stacks.c \
+ft_swap.c \
+init_a_to_b.c \
+init_b_to_a.c \
+push_swap.c \
+ft_split.c \
+ft_helper_functions.c \
+ft_atol.c
+
+
+
+
+
+
+#ft_atol.c \
+#ft_helper_functions.c \
+#ft_split.c \
+
+
+
 
 
 #This line simply creates a variable (OBJS) that contains a list of object files 
@@ -25,7 +56,8 @@ all: $(NAME)
 # -o $(NAME) --> states the name of the executable 
 # $(OBJS) --> links the .o files toguether to create the executable
 $(NAME): $(OBJS)
-	cc $(CFLAGS) -o $(NAME) $(OBJS)
+	cc $(CFLAGS) -o $(NAME) $(OBJS) 
+#$(LIBS)
 
 
 
@@ -33,13 +65,14 @@ $(NAME): $(OBJS)
 #compile any .c file into a corresponding .o file.
 %.o:%.c 
 	cc $(CFLAGS) -c $< -o $@
+
 clean:
 	-rm -f $(OBJS)
 
-fclean:
+fclean: clean
 	-rm -f $(NAME)
+#	-rm -f *.gch
 
-re:
-	fclean all
+re: fclean all
 
 .Phony: all clean fclean re 

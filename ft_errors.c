@@ -46,13 +46,26 @@ void	free_stack(stack_node **stack)
 		free(current_node);
 		current_node = temp;
 	}
-	*stack = NULL;
+	*stack = NULL; // after freeing  need to set the og pointer to NULL
 	
 }
 
 void	free_error(stack_node **a) 
 {
 	free_stack(a);
-	perror("Error\n");
+	write(1, "Error\n", 6);
 	exit(1);
+}
+
+void	free_aray(char **argv) 
+{
+	int i;
+	
+	i = 0;
+	while (argv[i] != NULL) // frees each string individually
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv); // then i have to free the array itself
 }
