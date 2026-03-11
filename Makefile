@@ -6,22 +6,22 @@ NAME = push_swap
 
 CFLAGS = -Wall -Wextra -Werror -g #I .
 
-SRC = ft_append_node.c \
-ft_errors.c \
-ft_price.c \
-ft_push.c \
-ft_reverse_rotate.c \
-ft_rotate.c \
-ft_sort_stacks.c \
-ft_sorting.c \
-ft_stacks.c \
-ft_swap.c \
-init_a_to_b.c \
-init_b_to_a.c \
-push_swap.c \
-ft_split.c \
-ft_helper_functions.c \
-ft_atol.c
+SRC =  push_swap.c \
+#ft_append_node.c \
+# ft_errors.c \
+# ft_price.c \
+# ft_push.c \
+# ft_reverse_rotate.c \
+# ft_rotate.c \
+# ft_sort_stacks.c \
+# ft_sorting.c \
+# ft_stacks.c \
+# ft_swap.c \
+# init_a_to_b.c \
+# init_b_to_a.c \
+# ft_split.c \
+# ft_helper_functions.c \
+# ft_atol.c
 
 
 
