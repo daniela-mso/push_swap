@@ -1,151 +1,81 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/14 23:35:22 by danielad          #+#    #+#             */
+/*   Updated: 2026/03/14 23:35:55 by danielad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-//# include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
 # include <unistd.h>
 
-
 typedef struct s_stack
 {
-	int	data;
-	int index;
+	int				value;
+	int				index;
 
 	struct s_stack	*next;
 	struct s_stack	*prev;
-} t_stack;
+}					t_stack;
 
+char		**ft_split(char *s, char c);
+long int	ft_atol(char *str);
 
-// //ft_append_node.c
+// push.c
+void		push(t_stack **src, t_stack **dest);
+void		pa(t_stack **a, t_stack **b);
+void		pb(t_stack **a, t_stack **b);
 
-// void	ft_append_node(stack_node **stack, int num);
-// stack_node *biggest_node(stack_node *stack);
-// stack_node	*smallest_node(stack_node *stack);
-// stack_node	*find_last_node(stack_node *stack);
-// // --------------------------------------------------------
+//rotate.c
+void		rotate(t_stack **stack);
+void		ra(t_stack **a);
+void		rb(t_stack **b);
+void		rr(t_stack **a, t_stack **b);
 
+// swap.c
+void		swap(t_stack **head);
+void		sa(t_stack **a);
+void		sb(t_stack **b);
+void		ss(t_stack **a, t_stack **b);
 
+// rev_rotate.c
+void		reverse_rotate(t_stack **stack);
+void		rra(t_stack **a);
+void		rrb(t_stack **b);
+void		rrr(t_stack **a, t_stack **b);
 
-// // ft_errors.c
+// sort.c
+int			is_sorted(t_stack *stack);
+void		sort_three(t_stack **stack);
+void		sort_five(t_stack **a, t_stack **b);
+void		radix_sort(t_stack **a, t_stack **b);
+void		sort(t_stack **a, t_stack **b);
 
-// int	syntax_error(char *str);
-// int	duplicate_error(stack_node *a, int n);
-// void	free_stack(stack_node **stack);
-// void	free_error(stack_node **a) ;
-// void	free_aray(char **argv);
-// //--------------------------------------------------------------
+// errors.c
+void		free_stack(t_stack **stack);
+int			syntax_error(char *str);
+int			duplicate_error(t_stack *a, int n);
+void		process_node(t_stack **a, char *str);
 
-// //ft_price.c
+//nodes.c
+t_stack		*find_last_node(t_stack *stack);
+void		add_back(t_stack **stack, int val);
+int			stack_len(t_stack *stack);
+t_stack		*biggest_node(t_stack *stack);
+t_stack		*smallest_node(t_stack *stack);
 
-// stack_node	*get_cheapest(stack_node *stack);
-// void	prep_for_push(stack_node **stack, stack_node *top_node, char stack_name);
-// //----------------------------------------------------------------------------------
-
-
-// // ft_push.c
-
-// void	pa(stack_node **a, stack_node **b, int print);
-// void	pb(stack_node **a, stack_node **b, int print);
-// //---------------------------------------------------------------------------------
-
-
-// // ft_reverse_rotate.c
-
-// void	rra(stack_node **a, int print);
-// void	rrb(stack_node **b, int print);
-// void	rrr(stack_node **a, stack_node **b, int print);
-// //--------------------------------------------------------------------------------
-
-
-
-// //ft_rotate.c
-
-// void	ra(stack_node **a, int print);
-// void	rb(stack_node **b, int print);
-// void	rr(stack_node **a, stack_node **b, int print);
-// //----------------------------------------------------------------------------------
-
-
-
-// //ft_sort_stacks.c
-
-// void	sort_stacks(stack_node **a, stack_node **b);
-// //---------------------------------------------------------------------------------
-
-
-
-// //ft_sorting.c
-
-// int	is_stack_sorted(stack_node *stack);
-// int	stack_len(stack_node *stack);
-// void	sort_three(stack_node **stack);
-// //-------------------------------------------------------------------------------
-
-
-
-// //ft_stacks.c
-
-// void	ft_stacks(stack_node **a, char **argv);
-// //-----------------------------------------------------------------------------
-
-
-// //ft_swap.c
-
-// void	sa(stack_node **a, int print);
-// void	sb(stack_node **b, int print);
-// void	ss(stack_node **a, stack_node **b, int print);
-// //-----------------------------------------------------------------------------
-
-
-// //init_a_to_b.c
-
-// void	current_index(stack_node *stack);
-// void	set_cheapest(stack_node *stack);
-// void	init_nodes_a(stack_node *a, stack_node *b);
-// //--------------------------------------------------------------
-
-
-// //init_b_to_a.c
-
-// void	init_nodes_b(stack_node *a, stack_node *b);
-// //------------------------------------------------------------
-
-
-// //push_swap.c
-
-// int main(int argc, char **argv);
-// //--------------------------------------------------------------
-
-
-// //ft_split.c
-
-// char **ft_split(char *s, char c);
-// //-----------------------------------------------------------------
-
-// //ft_helper functions.c
-
-// int	ft_isdigit(int c);
-// int	ft_isspace(int c);
-// int	ft_strlen(const char *str);
-// void	*ft_memset(void *s, int c, size_t n_bytes);
-// void	*ft_calloc(size_t n_elements, size_t size);
-// //--------------------------------------------------------------------
-
-
-
-// //ft_atol.c
-
-// long int	ft_atol(char *str);
-// //--------------------------------------------------------------------
-
-
-
-
-
-
-
-
+//push_swap.c
+void		parse_and_fill(int argc, char **argv, t_stack **a);
+int			get_position(t_stack *stack, t_stack *target);
+void		assign_index(t_stack *stack);
 
 #endif 

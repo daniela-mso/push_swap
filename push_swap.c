@@ -1,80 +1,130 @@
-# include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/14 23:36:11 by danielad          #+#    #+#             */
+/*   Updated: 2026/03/14 23:42:01 by danielad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "push_swap.h"
 
-void	push(t_stack **src, t_stack **dest)
+void	parse_and_fill(int argc, char **argv, t_stack **a)
 {
-	t_stack *node_to_move;
+	int		i;
+	int		j;
+	char	*str;
 
-	if (*src == NULL)
-		return ;
-	node_to_move = *src;
-	*src = (*src)->next;
-	if (*src != NULL)
-		(*src)->prev = NULL;
-	if (*dest == NULL)
+	i = 1;
+	while (i < argc)
 	{
-		*dest = node_to_move;
-		node_to_move->next = NULL;
+		j = 0;
+		str = argv[i];
+		while (str[j])
+		{
+			while (str[j] == ' ')
+				j++;
+			if (!str[j])
+				break ;
+			process_node(a, &str[j]);
+			while (str[j] && str[j] != ' ')
+				j++;
+		}
+		i++;
 	}
-	else
-	{
-		node_to_move->next = *dest;
-		node_to_move->next->prev = node_to_move;
-		*dest = node_to_move;
-	}
-
 }
 
-void	pa(t_stack *a, t_stack *b)
-{
-	push(a, b);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b)
-{
-	push(b, a);
-	write(1, "pb\n", 3);
-}
-
-
-int main(int argc, char *argv[])
-{
-	if (argv < 2 || argv[1][0] == '\0')
-		return (0);
-
-	
-	
-		return (0);
-}
-
-
-// int main(int argc, char **argv)
+// void parse_and_fill(int argc, char **argv, t_stack **a)
 // {
-// 	stack_node	*a;
-// 	stack_node	*b;
+//     int i;
+//     int j;
+//     int k;
+//     char temp[20];
 
-// 	a = NULL;
-// 	b = NULL;
-// 	if (argc == 1 || (argc == 2 && argv[1][0] == '\0'))
-// 		return (1);
-// 	else if (argc == 2 )
-// 		argv = ft_split(argv[1], ' '); // this will dynamically allocate memory for the array of strings that split returns ill need to free it later
-// 	ft_stacks(&a, argv + 1);
-// 	if (is_stack_sorted(a) == 0)
-// 	{
-// 		//printf("\n entered if to sort");
-// 		if (stack_len(a) == 2)
-// 			write(1, "ppppppp\n", 8);
-// 			//sa(&a, 0);
-// 		else if (stack_len(a) == 3)
-// 			sort_three(&a);
-// 		else
-// 			sort_stacks(&a, &b);
-
-// 	}
-// 	if (argc == 2)
-// 		free_aray(argv); // need to free the array returned by split 
-// 	free_stack(&a); // free the nodes 
-// 	return (0);
+//     i = 1;
+//     while (i < argc)
+//     {
+//         j = 0;
+//         while (argv[i][j])
+//         {
+//             while (argv[i][j] == ' ')
+//                 j++;
+//             if (!argv[i][j])
+//                 break;
+//             k = 0;
+//             while (argv[i][j] && argv[i][j] != ' ')
+//             {
+//                 if (k < 19)
+//                     temp[k++] = argv[i][j];
+//                 j++;
+//             }
+//             temp[k] = '\0';
+//             process_node(a, temp);
+//         }
+//         i++;
+//     }
 // }
+
+int	get_position(t_stack *stack, t_stack *target)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack && stack != target)
+	{
+		pos++;
+		stack = stack->next;
+	}
+	return (pos);
+}
+
+void	assign_index(t_stack *stack)
+{
+	t_stack	*current;
+	t_stack	*compare;
+	int		rank;
+
+	current = stack;
+	while (current)
+	{
+		rank = 0;
+		compare = stack;
+		while (compare)
+		{
+			if (current->value > compare->value)
+				rank++;
+			compare = compare->next;
+		}
+		current->index = rank;
+		current = current->next;
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	t_stack	*a;
+	t_stack	*b;
+	int		len;
+
+	a = NULL;
+	b = NULL;
+	parse_and_fill(argc, argv, &a);
+	assign_index(a);
+	if (is_sorted(a))
+		return (0);
+	len = stack_len(a);
+	if (len == 2)
+		sa(&a);
+	else if (len == 3)
+		sort_three(&a);
+	else if (len <= 5)
+		sort_five(&a, &b);
+	else
+		radix_sort(&a, &b);
+	free_stack(&a);
+	free_stack(&b);
+	return (0);
+}

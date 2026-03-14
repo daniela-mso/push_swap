@@ -1,78 +1,54 @@
-NAME = push_swap
+NAME			= push_swap
 
-#LIBFT_DIR = ./libft
-
-#LIBS = ./libft/libft.a
-
-CFLAGS = -Wall -Wextra -Werror -g #I .
-
-SRC =  push_swap.c \
-#ft_append_node.c \
-# ft_errors.c \
-# ft_price.c \
-# ft_push.c \
-# ft_reverse_rotate.c \
-# ft_rotate.c \
-# ft_sort_stacks.c \
-# ft_sorting.c \
-# ft_stacks.c \
-# ft_swap.c \
-# init_a_to_b.c \
-# init_b_to_a.c \
-# ft_split.c \
-# ft_helper_functions.c \
-# ft_atol.c
+CFLAGS			= -Wall -Wextra -Werror -g
 
 
 
+SRC				= push_swap.c ft_atol.c ft_split.c push.c rotate.c swap.c rev_rotate.c sort.c errors.c nodes.c
+
+OBJS			= $(SRC:.c=.o)
 
 
-
-#ft_atol.c \
-#ft_helper_functions.c \
-#ft_split.c \
-
-
-
-
-
-#This line simply creates a variable (OBJS) that contains a list of object files 
-#corresponding to the source files listed in SRC.
-#It does not actually compile or create the object files; 
-#it just prepares a list that tells the makefile which object files are needed
-#for linking later.
-OBJS = $(SRC:.c=.o)
-
-
-
-#This line defines a target called all
-#It states that all depends on $(NAME), which represents the final executable
-#When you run make all (or just make), make checks if the target $(NAME) (the executable) 
-#needs to be built or updated.
 all: $(NAME)
 
+$(NAME): $(OBJS) 
+	cc $(CFLAGS) $(OBJS)  -o $(NAME)
 
-#Specifies how to build that executable from its object files.
-# -o $(NAME) --> states the name of the executable 
-# $(OBJS) --> links the .o files toguether to create the executable
-$(NAME): $(OBJS)
-	cc $(CFLAGS) -o $(NAME) $(OBJS) 
-#$(LIBS)
-
-
-
-#This rule is a pattern rule that tells make how to 
-#compile any .c file into a corresponding .o file.
-%.o:%.c 
+%.o:%.cc
 	cc $(CFLAGS) -c $< -o $@
 
-clean:
-	-rm -f $(OBJS)
 
-fclean: clean
-	-rm -f $(NAME)
-#	-rm -f *.gch
+clean:
+	rm -f $(OBJS)
+
+fclean:
+	rm -f $(OBJS)
+	rm -f $(NAME)
 
 re: fclean all
 
-.Phony: all clean fclean re 
+test: all
+	@echo "--- Testing with 100 random numbers ---"
+	$(eval ARG := $(shell seq 1 100 | shuf | tr '\n' ' '))
+	@./push_swap $(ARG) > moves.txt
+	@if ./checker_linux $(ARG) < moves.txt | grep -q "OK"; then \
+		echo "Result: OK"; \
+	else \
+		echo "Result: KO"; \
+	fi
+	@echo "Move count: $$(wc -l < moves.txt)"
+	@rm moves.txt
+
+
+valgrind: all
+	@echo "--- Checking Memory Leaks with Valgrind ---"
+	$(eval ARG := 1 3 2 5 0 -67)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./push_swap $(ARG)
+
+# Run: make valgrind-large
+valgrind-large: all
+	@echo "--- Checking Memory Leaks with 100 Numbers ---"
+	$(eval ARG := $(shell seq 1 100 | shuf | tr '\n' ' '))
+	@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) > /dev/null
+
+.PHONY: all clean fclean re
