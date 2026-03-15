@@ -6,7 +6,7 @@
 /*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:35:22 by danielad          #+#    #+#             */
-/*   Updated: 2026/03/15 08:45:14 by danielad         ###   ########.fr       */
+/*   Updated: 2026/03/15 13:41:38 by danielad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void		sort(t_stack **a, t_stack **b);
 void		free_stack(t_stack **stack);
 int			syntax_error(char *str);
 int			duplicate_error(t_stack *a, int n);
-// void	free_stack(t_stack **stack);
-void	handle_error(t_stack **a);
-
+void		handle_error(t_stack **a);
 
 //nodes.c
 t_stack		*find_last_node(t_stack *stack);

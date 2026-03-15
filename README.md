@@ -37,7 +37,7 @@ ARG=$(seq 1 100 | shuf | tr '\n' ' '); ./push_swap $ARG | wc -l
 Run the program with the folowing rule to test it against a large number of integers
 ```bash
 make test
-```
+```val
 
 ### Valgrind check
 Run 

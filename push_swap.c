@@ -6,7 +6,7 @@
 /*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:36:11 by danielad          #+#    #+#             */
-/*   Updated: 2026/03/15 08:50:35 by danielad         ###   ########.fr       */
+/*   Updated: 2026/03/15 13:42:34 by danielad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,57 +38,29 @@ void	parse_and_fill(int argc, char **argv, t_stack **a)
 {
 	int		i;
 	int		j;
-	char	*str;
+	int		k;
+	char	temp[20];
 
-	i = 1;
-	while (i < argc)
+	i = 0;
+	while (++i < argc)
 	{
 		j = 0;
-		str = argv[i];
-		while (str[j])
+		while (argv[i][j])
 		{
-			while (str[j] == ' ')
+			while (argv[i][j] == ' ')
 				j++;
-			if (!str[j])
+			if (!argv[i][j])
 				break ;
-			process_node(a, &str[j]);
-			while (str[j] && str[j] != ' ')
+			k = 0;
+			while (argv[i][j] && argv[i][j] != ' ' && k < 19)
+				temp[k++] = argv[i][j++];
+			temp[k] = '\0';
+			process_node(a, temp);
+			while (argv[i][j] && argv[i][j] != ' ')
 				j++;
 		}
-		i++;
 	}
 }
-
-// void parse_and_fill(int argc, char **argv, t_stack **a)
-// {
-//     int i;
-//     int j;
-//     int k;
-//     char temp[20];
-
-//     i = 1;
-//     while (i < argc)
-//     {
-//         j = 0;
-//         while (argv[i][j])
-//         {
-//             while (argv[i][j] == ' ')
-//                 j++;
-//             if (!argv[i][j])
-//                 break;
-//             k = 0;
-//             while (argv[i][j] && argv[i][j] != ' ')
-//             {
-//                 if (k < 19)
-//                     temp[k++] = argv[i][j];
-//                 j++;
-//             }
-//             temp[k] = '\0';
-//             process_node(a, temp);
-//         }
-//         i++;
-//     }
-// }
 
 int	get_position(t_stack *stack, t_stack *target)
 {
@@ -138,7 +110,7 @@ int	main(int argc, char **argv)
 	parse_and_fill(argc, argv, &a);
 	assign_index(a);
 	if (is_sorted(a))
-		return (0);
+		return (free_stack(&a), 0);
 	len = stack_len(a);
 	if (len == 2)
 		sa(&a);
