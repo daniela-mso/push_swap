@@ -1,101 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/14 23:47:57 by danielad          #+#    #+#             */
+/*   Updated: 2026/03/15 08:40:58 by danielad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "push_swap.h"
-
-// static int	count_splits(const char *str, char c)
-// {
-// 	int		index;
-// 	int		nb_str;
-// 	int		inside;
-
-// 	index = -1;
-// 	nb_str = 0;
-// 	inside = 1;
-// 	while (str[++index] != '\0')
-// 	{
-// 		if (str[index] != c && inside == 1)
-// 		{
-// 			inside = 0;
-// 			nb_str++;
-// 		}
-// 		else if (str[index] == c)
-// 			inside = 1;
-// 	}
-// 	return (nb_str);
-// }
-
-// static char	*fill_word(const char *str, int start, int end)
-// {
-// 	char	*word;
-// 	int		i;
-
-// 	i = 0;
-// 	word = malloc((end - start + 1) * sizeof(char));
-// 	if (word == NULL)
-// 		return (NULL);
-// 	while (start < end)
-// 	{
-// 		word[i] = str[start];
-// 		i++;
-// 		start++;
-// 	}
-// 	word[i] = 0;
-// 	return (word);
-// }
-
-// static void	initiate_var(size_t *i, int *j, int *s_word)
-// {
-// 	*i = 0;
-// 	*j = 0;
-// 	*s_word = -1;
-// }
-
-// static void	*free_all(char **strs, int count)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		free(strs[i]);
-// 		i++;
-// 	}
-// 	free(strs);
-// 	return (NULL);
-// }
-
-// char	**ft_split(const char *str, char c)
-// {
-// 	char	**splited;
-// 	size_t	i;
-// 	int		j;
-// 	int		s_word;
-
-// 	initiate_var(&i, &j, &s_word);
-// 	splited = ft_calloc((count_splits(str, c) + 1), sizeof(char *));
-// 	if (splited == NULL)
-// 		return (NULL);
-// 	while (i <= (size_t)ft_strlen(str))
-// 	{
-// 		if (str[i] != c && s_word < 0)
-// 			s_word = i;
-// 		else if ((str[i] == c || i == (size_t)ft_strlen(str)) && s_word >= 0)
-// 		{
-// 			splited[j] = fill_word(str, s_word, i);
-// 			if (!(splited[j]))
-// 				return (free_all(splited, j));
-// 			s_word = -1;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	splited[j] = NULL;
-// 	return (splited);
-// }
-
-//See notes below, why we had to create a "mutable" ft_split, rather than using our libft version
-
-
-
-
 
 
 static int	count_words(char *s, char c) //Define a function that returns the substrings count in a string seperated by a delimiter
@@ -172,47 +87,3 @@ char **ft_split(char *s, char c) //Define a function that returns the substrings
 	result_array[i] = NULL; //Properly null terminate the array
 	return (result_array);
 }
-
-
-/*
- Both functions, `ft_split()` `split()` split a string into an array of substrings using a specified delimiter character. 
- However, the differences are:
-
- #1	Function Signature:
-	- `ft_split` takes a constant string (const char *s) as input.
-	- `split` takes a mutable string (char *s) as input.
-
-#2	Input Mutability:
-	- `ft_split` takes a constant string (const char *s) as input, indicating that it does not modify the input string.
-	- `split` takes a mutable string (char *s) as input, indicating it may modify the input string during tokenization.
-	- Mutable strings can be modified in-place, meaning you can change the characters within the string without creating 
-	  a new string object.
-	- Immutable strings, on the other hand, cannot be modified once they are created. Any operation that appears to modify 
-	  an immutable string actually creates a new string with the desired changes.
-
-#TOKENIZATION:
-	- Tokenization is the process of breaking down a text or a sequence of characters into smaller units called tokens. 
-	- Tokens are typically words, phrases, symbols, or other meaningful elements within the text.
-	- In the case of push_swap,  Word tokenization is the process of splitting text into words or word-like units. 
-	  It involves identifying word boundaries and separating words from each other. For example, in the sentence "Tokenization 
-	  is important," the words "Tokenization," "is," and "important" are individual tokens.
-	- Purpose: 
-	  Tokenization is a preprocessing step that simplifies text analysis tasks. 
-	  It allows text to be represented in a form that can be easily processed by algorithms and models. 
-
-#3	Memory Management:
-	- `ft_split` allocates memory for the resulting string array and the individual substrings within the function, 
-	  and frees memory
-	- `split` also allocates memory for the resulting string array and substrings but relies on the caller to free the memory.
-
-#4	Static Variable Usage:
-	- `ft_split` does not use static variables in its implementation.
-	- `split` uses a static variable cursor to keep track of the position in the input string for tokenization.
-
-#5	Error Handling:
-	- `ft_split` returns NULL if memory allocation fails during the tokenization process.
-	- `split` exits the program with an error code if the number of words is zero.
-
-In summary, both functions perform string tokenization, but they have differences in terms of input mutability, memory 
-management, and error handling. 
-*/

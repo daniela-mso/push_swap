@@ -6,7 +6,7 @@
 /*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:49:40 by danielad          #+#    #+#             */
-/*   Updated: 2026/03/14 23:53:26 by danielad         ###   ########.fr       */
+/*   Updated: 2026/03/15 08:45:07 by danielad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,27 @@ int	duplicate_error(t_stack *a, int n)
 	return (1);
 }
 
-void	process_node(t_stack **a, char *str)
-{
-	long	n;
+// void	free_stack(t_stack **stack)
+// {
+// 	t_stack	*current;
+// 	t_stack	*next;
 
-	if (str[0] == '\0')
-		return ;
-	if (syntax_error(str) == 0)
-	{
-		write(2, "Error\n", 6);
-		exit(1);
-	}
-	n = ft_atol(str);
-	if (n > 2147483647 || n < -2147483648)
-	{
-		write(2, "Error\n", 6);
-		exit(1);
-	}
-	if (duplicate_error(*a, (int)n) == 0)
-	{
-		write(2, "Error\n", 6);
-		exit(1);
-	}
-	add_back(a, (int)n);
+// 	if (!stack || !*stack)
+// 		return ;
+// 	current = *stack;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		free(current);
+// 		current = next;
+// 	}
+// 	*stack = NULL;
+// }
+
+void	handle_error(t_stack **a)
+{
+	if (a != NULL)
+		free_stack(a);
+	write(2, "Error\n", 6);
+	exit(1);
 }

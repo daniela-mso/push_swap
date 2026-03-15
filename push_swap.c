@@ -6,11 +6,33 @@
 /*   By: danielad <danielad@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 23:36:11 by danielad          #+#    #+#             */
-/*   Updated: 2026/03/14 23:42:01 by danielad         ###   ########.fr       */
+/*   Updated: 2026/03/15 08:50:35 by danielad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	process_node(t_stack **a, char *str)
+{
+	long	n;
+
+	if (str[0] == '\0')
+		return ;
+	if (syntax_error(str) == 0)
+	{
+		handle_error(a);
+	}
+	n = ft_atol(str);
+	if (n > 2147483647 || n < -2147483648)
+	{
+		handle_error(a);
+	}
+	if (duplicate_error(*a, (int)n) == 0)
+	{
+		handle_error(a);
+	}
+	add_back(a, (int)n);
+}
 
 void	parse_and_fill(int argc, char **argv, t_stack **a)
 {
@@ -109,6 +131,8 @@ int	main(int argc, char **argv)
 	t_stack	*b;
 	int		len;
 
+	if (argc < 2)
+		return (0);
 	a = NULL;
 	b = NULL;
 	parse_and_fill(argc, argv, &a);
